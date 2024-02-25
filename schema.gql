@@ -24,6 +24,5 @@ input UpdateUserInput {
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
 }

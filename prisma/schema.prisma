@@ -21,7 +21,7 @@ model User{
   name String
   surname String
   dob DateTime
-  photo String
+  photoPath String @map("photo_path")
   role Role @default(USER)
 
 }
@@ -37,15 +37,16 @@ model Organization{
   title String
   description String
   category Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  categoryId Int @map("category_id")
   offers Offer[]
 }
+
 
 model Offer{
   id Int @id @default(autoincrement())
   title String
   organization Organization @relation(fields: [organizationId], references: [id])
-  organizationId Int
+  organizationId Int @map("organization_id")
 }
 
 
