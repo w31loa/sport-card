@@ -2,27 +2,55 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
+  createUser(createUserInput: UserInput!): User!
   removeUser(id: Int!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
-  user(id: Int!): User!
+  userByCardNumber(cardNumber: String!): User!
+  userById(id: Int!): User!
+  userByLogin(login: String!): User!
+  users: [User!]!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  cardNumber: String
+  dob: DateTime
+  id: ID!
+  login: String
+  name: String
+  password: String
+  photoPath: String
+  role: String
+  surname: String
 }
 
 type User {
+  cardNumber: String!
+  dob: DateTime!
   id: ID!
+  login: String!
+  name: String!
+  password: String!
+  photoPath: String!
+  role: String!
+  surname: String!
+}
+
+input UserInput {
+  cardNumber: String!
+  dob: DateTime!
+  login: String!
+  name: String!
+  password: String!
+  photoPath: String
+  role: String!
+  surname: String!
 }

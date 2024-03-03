@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ProvidersModule } from './providers/providers.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -17,8 +18,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       sortSchema: true,
       playground: true
     }),
-    ProvidersModule, 
-    UserModule
+    UserModule, AuthModule, PrismaModule
   ],
 })
 export class AppModule { }

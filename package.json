@@ -29,7 +29,9 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.10.2",
+    "@types/graphql-upload": "^16.0.7",
     "graphql": "^16.8.1",
+    "graphql-upload": "^16.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },

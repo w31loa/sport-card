@@ -1,9 +1,14 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { $Enums } from '@prisma/client';
+import { GraphQLEnumType } from 'graphql';
 
 @ObjectType()
 export class User {
   @Field(()=> ID , {nullable:false})
   id!: number
+
+  @Field(()=> String  , {nullable: false })
+  cardNumber!: string
 
   @Field(()=> String, {nullable: false})
   login!: string
@@ -20,17 +25,16 @@ export class User {
   @Field(()=> Date , {nullable: false})
   dob!: Date
 
+  @Field(()=> String||null, {nullable: false})
+  photoPath?: string
+
   @Field(()=> String, {nullable: false})
-  photoPath!: string
+  role!: $Enums.Role
 
-  @Field(()=> Role, {nullable: false, defaultValue: "USER"})
-  role!: Role
 
 }
 
 
 
-enum Role{
-  USER,
-  ADMIN
-}
+
+
