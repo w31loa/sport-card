@@ -4,8 +4,6 @@ import { $Enums } from '@prisma/client';
 @InputType('UserInput')
 export class CreateUserInput {
 
-  @Field()
-  cardNumber!: string
 
   @Field()
   login!: string

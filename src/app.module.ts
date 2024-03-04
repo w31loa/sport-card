@@ -5,6 +5,10 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { CategoryModule } from './category/category.module';
+import { OrganizationModule } from './organization/organization.module';
+import { OfferModule } from './offer/offer.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -18,7 +22,7 @@ import { PrismaModule } from './prisma/prisma.module';
       sortSchema: true,
       playground: true
     }),
-    UserModule, AuthModule, PrismaModule
+    UserModule, AuthModule, PrismaModule, CategoryModule, OrganizationModule, OfferModule, FilesModule
   ],
 })
 export class AppModule { }

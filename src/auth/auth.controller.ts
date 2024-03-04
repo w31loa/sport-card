@@ -1,4 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common';
 
 @Controller('auth')
-export class AuthController {}
+export class AuthController {
+
+  
+
+}

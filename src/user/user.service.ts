@@ -3,19 +3,40 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from './model/user.model';
-import { STATUS_CODES } from 'http';
+import { IUserInToken } from 'src/auth/auth.types';
+import { FilesService } from 'src/files/files.service';
 
 
 @Injectable()
 export class UserService {
 
-  constructor(private readonly prisma:PrismaService){}
+  constructor(private readonly prisma:PrismaService,
+              private readonly fileService:FilesService){}
 
   async create(createUserInput: CreateUserInput) {
+    
+    let cardNumber =  this.generateCardNumber(16)
 
-    const newUser = await this.prisma.user.create({data:createUserInput})
+    const userExist = this.prisma.user.findFirst({where: {cardNumber} })
+  
+    if(userExist){
+      cardNumber = this.generateCardNumber(16)
+    }
 
-    return newUser 
+
+    const data = {
+      cardNumber: cardNumber,
+      login: createUserInput.login,
+      password: createUserInput.password,
+      name: createUserInput.name,
+      surname: createUserInput.surname,
+      dob: createUserInput.dob,
+      role: createUserInput.role
+    }
+
+   
+
+    return  await this.prisma.user.create({data}) 
   }
 
   async findAll():Promise<User[]> {
@@ -81,4 +102,40 @@ export class UserService {
 
     return await this.prisma.user.delete({where: {id} });
   }
+
+
+
+  async setUserPhoto(file, user:IUserInToken){
+
+      const login = user.login
+
+      const filename = await this.fileService.createFile(file , login)
+
+
+      const userToUpdate = await this.prisma.user.findUnique({where: {login} })
+
+      userToUpdate.photoPath = filename
+
+      return await this.prisma.user.update({where:{login}, data: userToUpdate})
+
+  }
+
+
+   private generateCardNumber(length:number){
+    let cardNum = []
+
+    for(let i = 0 ; i<length ; i++){
+
+      if(i%4 == 0 && i>0){
+        cardNum.push(' ')
+      }
+
+      cardNum.push(Math.floor(Math.random() * 10))
+    }
+
+      return cardNum.join('')
+
+  
+  }
+
 } 

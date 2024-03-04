@@ -33,6 +33,9 @@ export class UserResolver {
     return this.userService.findOneByCardNumber(cardNumber);
   }
 
+
+
+
   @Mutation(() => User) 
   async updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return await this.userService.update(updateUserInput);

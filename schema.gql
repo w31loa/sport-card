@@ -2,26 +2,102 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  id: ID!
+  organizations: [Organization!]!
+  title: String!
+}
+
+input CreateCategoryInput {
+  title: String!
+}
+
+input CreateOfferInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateOrganizationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
+input LoginInput {
+  cardNumber: String
+  login: String
+  password: String!
+}
+
+type LoginResponse {
+  token: String!
+}
+
 type Mutation {
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  createOffer(createOfferInput: CreateOfferInput!): Offer!
+  createOrganization(createOrganizationInput: CreateOrganizationInput!): Organization!
   createUser(createUserInput: UserInput!): User!
+  login(loginInput: LoginInput!): LoginResponse!
+  removeCategory(id: Int!): Category!
+  removeOffer(id: Int!): Offer!
+  removeOrganization(id: Int!): Organization!
   removeUser(id: Int!): User!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  updateOffer(updateOfferInput: UpdateOfferInput!): Offer!
+  updateOrganization(updateOrganizationInput: UpdateOrganizationInput!): Organization!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
+type Offer {
+  authorId: Int!
+  id: ID!
+  organization: Organization!
+  title: String!
+}
+
+type Organization {
+  category: Category!
+  categoryId: Int!
+  description: String!
+  id: ID!
+  offers: [Offer!]!
+  title: String!
+}
+
 type Query {
+  categories: [Category!]!
+  category(id: Int!): Category!
+  offer(id: Int!): Offer!
+  organization(id: Int!): Organization!
   userByCardNumber(cardNumber: String!): User!
   userById(id: Int!): User!
   userByLogin(login: String!): User!
   users: [User!]!
 }
 
+input UpdateCategoryInput {
+  id: Int!
+  title: String
+}
+
+input UpdateOfferInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateOrganizationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
 input UpdateUserInput {
-  cardNumber: String
   dob: DateTime
   id: ID!
   login: String
@@ -45,7 +121,6 @@ type User {
 }
 
 input UserInput {
-  cardNumber: String!
   dob: DateTime!
   login: String!
   name: String!
