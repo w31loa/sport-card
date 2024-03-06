@@ -1,17 +1,19 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, OnModuleInit } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from './model/user.model';
 import { IUserInToken } from 'src/auth/auth.types';
 import { FilesService } from 'src/files/files.service';
+import { $Enums } from '@prisma/client';
 
 
 @Injectable()
-export class UserService {
+export class UserService implements OnModuleInit{
 
   constructor(private readonly prisma:PrismaService,
               private readonly fileService:FilesService){}
+
 
   async create(createUserInput: CreateUserInput) {
     
@@ -136,6 +138,35 @@ export class UserService {
       return cardNum.join('')
 
   
+  }
+
+
+  async onModuleInit() {
+    const admin = await this.prisma.user.findFirst({where: {
+      role: "ADMIN"
+    } })
+
+    if(!admin){
+
+      const date = new Date(Date.now())
+    
+      const data = {
+        cardNumber: "1111 1111 1111 1111",
+        login: "admin",
+        password: "root",
+        name: "admin",
+        surname: "admin",
+        dob: date.toISOString(),
+        role:"ADMIN" as $Enums.Role
+
+      }
+
+      const newAdmin = await this.prisma.user.create({data})
+      console.log(newAdmin)
+    }
+
+    console.log(admin)
+
   }
 
 } 

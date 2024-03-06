@@ -9,8 +9,8 @@ export class Category {
   @Field(()=> String  , {nullable: false })
   title!: string
 
-  @Field(()=> [Organization])
-  organizations!: Array<Organization>
+
+
 }
 
 
