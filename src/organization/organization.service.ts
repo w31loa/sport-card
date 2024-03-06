@@ -11,28 +11,50 @@ export class OrganizationService {
 
   async create(createOrganizationInput: CreateOrganizationInput) {
     const title = createOrganizationInput.title
-    const organization = await this.prismaService.category.findFirst({where: {title} })
+    const categoryId = createOrganizationInput.categoryId
+    const organization = await this.prismaService.organization.findFirst({where: {title} })
+    const category = await this.prismaService.category.findUnique({where: {id:categoryId} })
 
     if(organization){
       throw new HttpException('Organization with this title already' ,HttpStatus.BAD_REQUEST )
     }
+    if(!category){
+      throw new HttpException('This category does not exist' ,HttpStatus.BAD_REQUEST )
+    }
 
-    return await this.prismaService.organization.create({data: CreateOrganizationInput})
+    return await this.prismaService.organization.create({data: createOrganizationInput})
   }
 
-  findAll() {
-    return `This action returns all organization`;
+  async findAll() {
+    return  await this.prismaService.organization.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} organization`;
+  async findOne(id: number) {
+
+    const organization = await this.prismaService.organization.findUnique({where:{id} })
+
+    if(!organization){
+      throw new HttpException('Organization with this ID does not exist' ,HttpStatus.BAD_REQUEST )
+    }
+
+
+    return  organization;
   }
 
-  update(id: number, updateOrganizationInput: UpdateOrganizationInput) {
-    return `This action updates a #${id} organization`;
+  async update(id: number, updateOrganizationInput: UpdateOrganizationInput) {
+
+    const organization = await this.prismaService.organization.findUnique({where:{id} })
+
+    if(!organization){
+      throw new HttpException('Organization with this ID does not exist' ,HttpStatus.BAD_REQUEST )
+    }
+
+    return await this.prismaService.organization.update({where:{id} , data: updateOrganizationInput});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} organization`;
+  async remove(id: number) {
+   
+
+    return await this.prismaService.organization.delete({where:{id} })
   }
 }

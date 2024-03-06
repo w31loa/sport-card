@@ -14,8 +14,8 @@ export class CreateOrganizationInput {
   @Field(() => Number)
   categoryId: number;
 
-  @Field(() => [Offer], )
-  offers?: Array<Offer>;
+  // @Field(() => [Offer], )
+  // offers?: Array<Offer>;
 
 
 

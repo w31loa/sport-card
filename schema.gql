@@ -13,13 +13,14 @@ input CreateCategoryInput {
 }
 
 input CreateOfferInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  organizationId: Int!
+  title: String!
 }
 
 input CreateOrganizationInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  categoryId: Float!
+  description: String!
+  title: String!
 }
 
 """
@@ -54,14 +55,12 @@ type Mutation {
 }
 
 type Offer {
-  authorId: Int!
   id: ID!
-  organization: Organization!
+  organizationId: Int!
   title: String!
 }
 
 type Organization {
-  category: Category!
   categoryId: Int!
   description: String!
   id: ID!
@@ -74,6 +73,7 @@ type Query {
   category(id: Int!): Category!
   offer(id: Int!): Offer!
   organization(id: Int!): Organization!
+  organizations: [Organization!]!
   userByCardNumber(cardNumber: String!): User!
   userById(id: Int!): User!
   userByLogin(login: String!): User!
@@ -86,15 +86,16 @@ input UpdateCategoryInput {
 }
 
 input UpdateOfferInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  organizationId: Int
+  title: String
 }
 
 input UpdateOrganizationInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  categoryId: Float
+  description: String
   id: Int!
+  title: String
 }
 
 input UpdateUserInput {

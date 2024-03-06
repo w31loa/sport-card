@@ -10,10 +10,7 @@ export class Offer {
   @Field(() => String)
   title!: string;
 
-
-  @Field(() => Int)
-  authorId!: number;
   
-  @Field(() => Organization)
-  organization: Organization;
+  @Field(() => Int)
+  organizationId : number;
 }
